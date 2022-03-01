@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background: #E5E5E5 !important;
+}
+
+.searchbar {
+  margin-bottom: auto;
+  margin-top: auto;
+  height: 30px;
+  background-color: white;
+  border-radius: 30px;
+  padding: 0 10px;
+  border: 1px solid black;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 40vw;
+}
+
+.search_input {
+  color: black;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color: transparent;
+  line-height: 10px;
+  padding: 0 6px;
+  width: 96%;
+  caret-color: #505050;
+  margin-bottom: 5px;
+  margin-top: 6px;
+  font-size: 80%;
+}
+
+.search_icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  height: 16px;
+  width: 4%;
+  float: right;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 50%;
+  color: #505050;
+  text-decoration: none;
+}
+
+nav {
+  background: white;
+}
+
+nav .navbar-brand {
+  color: black;
+  margin-left: 30px;
+  font-weight: bold;
+}
+
+nav .navbar-toggler-icon {
+  color: black;
+}
+
+.col-md {
+  -webkit-box-flex: 0 !important;
+      -ms-flex: 0 !important;
+          flex: 0 !important;
+}
+
+.container-fluid {
+  max-width: 80vw !important;
+}
+
+.card {
+  margin: 1rem, 2rem !important;
+  padding-bottom: 1rem;
+  padding-left: 30px;
+  padding-right: 30px;
+  min-width: 250px !important;
+  max-width: 250px !important;
+  height: auto;
+  -webkit-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+          filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.card .store-img img {
+  position: relative;
+  width: auto;
+  height: 50px;
+  padding-top: 10px;
+}
+
+.card .prod-img {
+  text-align: center;
+}
+
+.card .prod-img img {
+  position: relative;
+  margin-top: 1rem;
+  width: auto;
+  height: 160px;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+}
+
+.card .prod-name {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.card .prod-price {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: black;
+}
+
+.card .price-date {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #707070;
+}
+/*# sourceMappingURL=styles.css.map */
