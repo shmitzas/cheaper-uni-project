@@ -145,6 +145,11 @@ nav .navbar-toggler-icon {
   border-style: none !important;
 }
 
+#popup #popup-dialog #popup-content #popup-body .best-price {
+  -webkit-box-shadow: 0px 0px 2px 3px #FFD700;
+          box-shadow: 0px 0px 2px 3px #FFD700;
+}
+
 #popup #popup-dialog #popup-content #popup-body .popup-prod-best-price {
   margin-top: 1rem;
   text-align: center;

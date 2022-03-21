@@ -122,6 +122,9 @@ nav {
             border: none !important;
             border-style: none !important;
             #popup-body{
+                .best-price{
+                    box-shadow: 0px 0px 2px 3px #FFD700;
+                }
                 .popup-prod-best-price{
                     margin-top: 1rem;
                     text-align: center;
