@@ -6,6 +6,7 @@
 body{
     background: #E5E5E5 !important;
 }
+
 .searchbar {
 	margin-bottom: auto;
 	margin-top: auto;
@@ -73,7 +74,8 @@ nav {
     min-width: 250px !important;
     max-width: 250px !important;
     height: auto;
-    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
 
     .store-img img{
         position: relative;
@@ -102,11 +104,129 @@ nav {
         text-align: center;
         font-size: 1.5rem;
         font-weight: 400;
-        color: black
+        color: black;
     }
     .price-date{
         text-align: center;
         font-size: 0.75rem;
         color: #707070;
+    }
+}
+
+#popup{
+    #popup-dialog{
+        // max-width: 70vw !important;
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)) !important;
+        
+        #popup-content{
+            border: none !important;
+            border-style: none !important;
+            #popup-body{
+                .popup-prod-best-price{
+                    margin-top: 1rem;
+                    text-align: center;
+                    color: #FF1B1B;
+                    font-size: 1rem;
+                    font-weight: 600;
+                }
+                .popup-store-img{
+                    margin-top: 1rem;
+                    text-align: center;
+                }
+                .popup-store-img img{
+                    position: relative;
+                    width: auto;
+                    height: 5rem;
+                    align-self: center;
+                }
+                .popup-prod-name{
+                    margin-top: 1rem;
+                    text-align: center;
+                    font-size: 1rem;
+                    font-weight: 400;
+                }
+                .popup-prod-price{
+                    margin-top: 2rem;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    font-weight: 450;
+                    color: black;
+                }
+                .popup-store-btn{
+                    margin-top: 1rem;
+                    align-self: center;
+                    button{
+                        width: 140px;
+                        height: 30px;
+                        background: #40E647;
+                        border-radius: 20px;
+                        border-style: none;
+                        text-align: center;
+                        font-size: 0.75rem;
+                        font-weight: 500;
+                    }
+            }
+                // .chart-container {
+                //     width: 60vw;
+                //     height: auto;
+                //     margin: auto;
+                //   }
+            }
+        }
+    }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    #popup-dialog{
+        max-width: 100% !important;
+    }
+    .searchbar{
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 80%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+    #popup-dialog{
+        max-width: 90% !important;
+    }
+    .searchbar{
+        width: 60%;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    #popup-dialog{
+        max-width: 70% !important;
     }
 }
