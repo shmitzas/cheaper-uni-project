@@ -100,11 +100,24 @@ nav {
         font-weight: 400;
     }
     .prod-price{
-        margin-top: 1rem;
         text-align: center;
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: black;
+        margin-top: 2rem;
+        vertical-align: middle;
+        span{
+            vertical-align: middle;
+        }
+        .prod-current-price{
+            font-size: 1.5rem;
+            font-weight: 450;
+            color: black;
+        }
+        .prod-old-price{
+            color: #707070;
+            font-size: 1rem;
+            font-weight: 400;
+            padding-right: 10px;
+            text-decoration: line-through;
+        }
     }
     .price-date{
         text-align: center;
