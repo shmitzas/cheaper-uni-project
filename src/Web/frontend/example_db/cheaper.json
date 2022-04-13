@@ -1,0 +1,6 @@
+{
+    "products":[
+        {"name": "Lavaza 500g", "oldPrice": null, "currentPrice": 2.59, "date": "2022-03-13"},
+        {"name": "Lavaza 250g", "oldPrice": 3.99, "currentPrice": 1.99, "date": "2022-03-11"}
+    ]
+}
