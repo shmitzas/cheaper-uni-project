@@ -1,3 +1,7 @@
+<script setup>
+import PopupProduct from "./PopupProduct.vue";
+</script>
+
 <template>
   <!-- Product price comparison popup -->
   <div id="popup" class="modal justify-content-center">
@@ -5,7 +9,7 @@
       <div id="popup-content" class="modal-content">
         <!-- Header -->
         <div id="popup-header" class="modal-header">
-          <h4 class="modal-title ps-5">Product name</h4>
+          <h4 class="modal-title ps-5">{{prod.name}}</h4>
           <button
             type="button"
             class="btn-close"
@@ -23,17 +27,18 @@
             <div class="col-md d-block mb-4">
               <div class="card best-price pb-3">
                 <div class="popup-store-img">
-                  <img src="../assets/img/Lidl_logo.png" alt="" />
+                  <img :src=prod.shops[0].shop_icon_url alt="">
                 </div>
                 <div class="popup-prod-name">
-                  <span>Exapmle name for a product</span>
+                  <span>{{prod.name}}</span>
                 </div>
-                <div class="popup-prod-price"><span>3.99 €</span></div>
+                <div class="popup-prod-price"><span>{{prod.shops[0].price}}€</span></div>
                 <div class="popup-store-btn">
-                  <button href="#">GO TO STORE</button>
+                  <button><a :href=prod.shops[0].product_url target="_blank" rel="noopener noreferrer">Go to store</a></button>
                 </div>
               </div>
             </div>
+            <!-- <PopupProduct /> -->
           </div>
         </div>
       </div>
@@ -43,6 +48,6 @@
 
 <script>
 export default {
-  props: ['prodName', 'prodOldPrice', 'prodPrice', 'priceDate'],
+  props: ['prod']
 };
 </script>
