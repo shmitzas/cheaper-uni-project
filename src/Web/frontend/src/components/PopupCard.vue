@@ -4,12 +4,12 @@ import PopupProduct from "./PopupProduct.vue";
 
 <template>
   <!-- Product price comparison popup -->
-  <div id="popup" class="modal justify-content-center">
+  <div :id="`popup${popProd.pid}`" class="modal justify-content-center">
     <div id="popup-dialog" class="modal-dialog d-block">
       <div id="popup-content" class="modal-content">
         <!-- Header -->
         <div id="popup-header" class="modal-header">
-          <h4 class="modal-title ps-5">{{prod.name}}</h4>
+          <h4 class="modal-title ps-5">{{popProd.name}}</h4>
           <button
             type="button"
             class="btn-close"
@@ -27,18 +27,23 @@ import PopupProduct from "./PopupProduct.vue";
             <div class="col-md d-block mb-4">
               <div class="card best-price pb-3">
                 <div class="popup-store-img">
-                  <img :src=prod.shops[0].shop_icon_url alt="">
+                  <img :src=popProd.shops[0].shop_icon_url alt="">
                 </div>
                 <div class="popup-prod-name">
-                  <span>{{prod.name}}</span>
+                  <span>{{popProd.name}}</span>
                 </div>
-                <div class="popup-prod-price"><span>{{prod.shops[0].price}}€</span></div>
+                <div class="popup-prod-price"><span>{{popProd.shops[0].price}}€</span></div>
                 <div class="popup-store-btn">
-                  <button><a :href=prod.shops[0].product_url target="_blank" rel="noopener noreferrer">Go to store</a></button>
+                  <button><a :href=popProd.shops[0].product_url target="_blank" rel="noopener noreferrer">Go to store</a></button>
                 </div>
               </div>
             </div>
-            <!-- <PopupProduct /> -->
+            <div class="other-products col-md d-block mb-4" v-for='item in popProd.shops.slice(1)' :key= 'item'>
+              <PopupProduct
+                :prod='item'
+                :name='popProd.name'
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -48,6 +53,6 @@ import PopupProduct from "./PopupProduct.vue";
 
 <script>
 export default {
-  props: ['prod']
+  props: ['popProd']
 };
 </script>

@@ -45,19 +45,19 @@ class DevDB extends DataInterface {
                         sid: 1,
                         url: this.domains[0],
                         old_price: 0,
-                        price: 1.00,
+                        price: 0.89,
                         product_url: product_urls[0],
                         shop_icon_url: this.shop_icon_urls[0],
-                        last_scan: '2022-04-07'
+                        last_scan: '2022-04-19'
                     },
                     {
                         sid: 2,
                         url: this.domains[1],
-                        old_price: 0,
-                        price: 1.00,
+                        old_price: 2.59,
+                        price: 1.19,
                         product_url: product_urls[0],
                         shop_icon_url: this.shop_icon_urls[1],
-                        last_scan: '2022-04-07'
+                        last_scan: '2022-04-23'
                     }
                 ]
             },
@@ -70,19 +70,19 @@ class DevDB extends DataInterface {
                         sid: 1,
                         url: this.domains[0],
                         old_price: 0,
-                        price: 1.00,
+                        price: 1.99,
                         product_url: product_urls[1],
                         shop_icon_url: this.shop_icon_urls[0],
-                        last_scan: '2022-04-07'
+                        last_scan: '2022-04-21'
                     },
                     {
                         sid: 2,
                         url: this.domains[1],
                         old_price: 0,
-                        price: 1.00,
+                        price: 2.49,
                         product_url: product_urls[1],
                         shop_icon_url: this.shop_icon_urls[1],
-                        last_scan: '2022-04-07'
+                        last_scan: '2022-04-22'
                     }
                 ]
             }

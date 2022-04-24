@@ -1,17 +1,17 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
-import PopupCard from "./components/PopupCard.vue";
+// import PopupCard from "./components/PopupCard.vue";
 </script>
 
 <template>
   <main>
     <NavBar />
     <div class="container-fluid" >
-      <div v-for='item in products' :key= 'item.pid'>
+      <!-- <div v-for='item in products' :key= 'item.pid'>
         <PopupCard
           :prod="item"
         />
-      </div>
+      </div> -->
       <!-- Front page product listings -->
       <div class="row justify-content-center">
         <div class="col-md-12 d-flex justify-content-center mt-5 mb-5">

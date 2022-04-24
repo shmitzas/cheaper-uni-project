@@ -1,3 +1,7 @@
+<script setup>
+import PopupCard from "./PopupCard.vue";
+</script>
+
 <template>
   <div class="card pb-3">
     <div class="store-img">
@@ -23,11 +27,12 @@
         <a
           :href="prod.shops[0].product_url"
           target="_blank"
-          rel="noopener noreferrer"
-          >Go to store</a
-        >
+          rel="noopener noreferrer">Go to store</a>
       </button>
-      <button class="to-popup" data-bs-toggle="modal" data-bs-target="#popup">
+      <button class="to-popup" data-bs-toggle="modal" :data-bs-target="'#popup'+prod.pid">
+        <PopupCard 
+          :popProd='prod'
+        />
         Other stores
       </button>
     </div>
@@ -36,6 +41,6 @@
 
 <script>
 export default {
-  props: ["prod"],
+  props: ['prod'],
 };
 </script>
