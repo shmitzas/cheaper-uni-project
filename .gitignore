@@ -105,3 +105,6 @@ dist
 
 test/
 src/Web/frontend-backup
+src/Web/frontend/node_modules
+src/Web/backend/node_modules
+src/Web/crawler/out.json
