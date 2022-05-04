@@ -1,12 +1,8 @@
-<script setup>
-import NavBar from "./components/NavBar.vue";
-</script>
-
 <template>
   <div id="app">
     <NavBar />
-    <div class="container-fluid" >
-      <router-view/>
+    <div class="container-fluid">
+      <router-view />
     </div>
   </div>
 </template>
@@ -16,7 +12,10 @@ import NavBar from "./components/NavBar.vue";
 </style>
 
 <script>
+import NavBar from "./components/NavBar.vue";
 export default {
-  name: 'app'
+  components: {
+    NavBar
+  }
 };
 </script>

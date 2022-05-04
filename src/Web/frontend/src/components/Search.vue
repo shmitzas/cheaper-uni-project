@@ -23,9 +23,10 @@
 </style>
 
 <script>
+import { BACKEND_URL } from "../constants";
 import ProductCard from "./ProductCard.vue";
 export default {
-  // props: ['query'],
+  props: ['query'],
   data() {
     return {
       products: [],
@@ -35,7 +36,7 @@ export default {
     ProductCard,
   },
   mounted() {
-    fetch("http://localhost:8081/search")
+    fetch(BACKEND_URL + "/search?t=" + this.query)
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));

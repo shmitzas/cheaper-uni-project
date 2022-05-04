@@ -23,6 +23,7 @@
 </style>
 
 <script>
+import { BACKEND_URL } from '../constants';
 import ProductCard from "./ProductCard.vue";
 export default {
   data() {
@@ -34,7 +35,7 @@ export default {
     ProductCard,
   },
   mounted() {
-    fetch("http://localhost:8081/search")
+    fetch(BACKEND_URL + "/product")
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));

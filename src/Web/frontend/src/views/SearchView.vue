@@ -1,16 +1,15 @@
-<script setup>
-import Search from "../components/Search.vue";
-</script>
-
 <template>
   <main>
-    <Search />
+    <Search :query="query"/>
   </main>
 </template>
 
-
 <script>
+import Search from "../components/Search.vue";
 export default {
-  props: ['query']
+  props: ['query'],
+  components: {
+    Search
+  }
 }
 </script>
