@@ -1,12 +1,23 @@
 <template>
   <main>
     <div class="row justify-content-center">
-      <div class="col-md-12 d-flex justify-content-center mt-5 mb-5">
+      <div class="col-md-12 d-flex justify-content-center mt-5 mb-4">
         <h3>Recently updated prices</h3>
       </div>
+      <div id="filters" class="col-md d-block dropdown justify-content-center">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Order by
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Name ASC</a></li>
+            <li><a class="dropdown-item" href="#">Name DEC</a></li>
+            <li><a class="dropdown-item" href="#">Cheapest</a></li>
+            <li><a class="dropdown-item" href="#">Most expensive</a></li>
+          </ul>
+        </div>
     </div>
     <div class="row justify-content-center">
-      <div class="col-md d-block mb-4" v-for="item in products" :key="item.pid">
+      <div class="col-md d-block mb-4 mt-5" v-for="item in products" :key="item.pid">
         <ProductCard :prod="item" />
       </div>
     </div>
@@ -35,7 +46,7 @@ export default {
     ProductCard,
   },
   mounted() {
-    fetch(BACKEND_URL + "/product")
+    fetch(BACKEND_URL + "/product?limit=20")
       .then((res) => res.json())
       .then((data) => (this.products = data))
       .catch((err) => console.log(err.message));

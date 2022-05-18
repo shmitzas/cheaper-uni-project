@@ -1,24 +1,113 @@
-import { readFileSync } from 'fs';
-import { createConnection } from 'mariadb';
+import { Sequelize, DataTypes } from 'sequelize';
 import DataInterface from './DataInterface.js';
 
-const queries = JSON.parse(readFileSync(process.env.QUERIES, 'utf8'));
-const ERROR_MSG_START = "ERROR RemoteDB ";
+const modelOpt = {
+    timestamps: false,
+    freezeTableName: true
+};
 
 export default class RemoteDB extends DataInterface {
     #connConfig;
 
     constructor(host, port, name, user, passw) {
         super();
-        this.#connConfig = {
-            host: host,
-            port: port,
-            database: name,
-            user: user,
-            password: passw,
-            connectionLimit: 10
-        };
-        console.log(this.#connConfig);
+        this._sq = new Sequelize(
+            `mariadb://${user}:${passw}@${host}:${port}/${name}`
+        );
+        this._models = {}
+        this._models.products = this._sq.define('product', {
+            pid: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            name: {
+                type: DataTypes.STRING(100),
+                allowNull: true
+            },
+            productIconUrl: {
+                type: DataTypes.STRING(1024),
+                allowNull: false,
+                defaultValue: 'http://www.domain.lt/product_image_path',
+                field: 'image_url'
+            }
+        }, modelOpt);
+        this._models.shops = this._sq.define('shop', {
+            sid: {
+                type: DataTypes.INTEGER,
+                primaryKey: true,
+                autoIncrement: true
+            },
+            name: {
+                type: DataTypes.STRING(50),
+                allowNull: true
+            },
+            url: {
+                type: DataTypes.STRING(1024),
+                allowNull: false,
+                defaultValue: 'http://www.domain.lt/product_image_path',
+                field: 'domain'
+            },
+            shopIconUrl: {
+                type: DataTypes.STRING(1024),
+                allowNull: false,
+                defaultValue: 'http://www.domain.lt/product_image_path',
+                field: 'image_url'
+            }
+        }, modelOpt);
+        this._models.productPrices = this._sq.define('product_prices', {
+            pid: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
+            sid: {
+                type: DataTypes.INTEGER,
+                primaryKey: true
+            },
+            name: {
+                type: DataTypes.STRING(50),
+                allowNull: true
+            },
+            url: {
+                type: DataTypes.STRING(1024),
+                allowNull: false,
+                defaultValue: 'http://www.domain.lt/product_image_path',
+                field: 'domain'
+            },
+            shopIconUrl: {
+                type: DataTypes.STRING(1024),
+                allowNull: false,
+                defaultValue: 'http://www.domain.lt/product_image_path',
+                field: 'shop_image_url'
+            },
+            productUrl: {
+                type: DataTypes.TEXT,
+                allowNull: true,
+                field: 'product_url'
+            },
+            lastScan: {
+                type: DataTypes.TIME,
+                primaryKey: true,
+                field: 'last_scan'
+            },
+            price: {
+                type: DataTypes.DECIMAL
+            }
+        }, modelOpt);
+
+        this._models.products.belongsTo(this._models.productPrices, {
+            as: 'shops',
+            foreignKey: {
+                name: 'pid',
+                allowNull: false
+            }
+        });
+
+        try {
+            this._sq.sync();
+        } catch(err) {
+            throw err;
+        }
     }
 
     /**
@@ -31,31 +120,20 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getProducts(greater, less, limit, page) {
-        let res = [];
+        const qOpt = {
+            include: {
+                model: this._models.productPrices,
+                as: 'shops'
+            },
+            ...(this.#createPaging(limit, page))
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            const queryProducts = queries[0] + this.#createPaging(limit, page);
-            res = (await conn.query(queryProducts)).slice(0);
-
-            let productPricesQueries = res.map(
-                p => conn.query(queries[1].replaceAll('{0}', p.pid))
-            );
-
-            for (let i in productPricesQueries) {
-                res[i].shops = await productPricesQueries[i];
-            }
-
-            await conn.end();
+            return await this._models.products.findAll(qOpt);
+            // res = res.map(p => )
         } catch (err) {
-            err.text = ERROR_MSG_START + "getProducts: " + err.text;
             throw err;
         }
-
-        // if (less > 0 && greater < less) {
-        //     // NOTE: write a query in SQL
-        // }
-        return res;
     }
 
     /**
@@ -66,19 +144,15 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getShops(limit, page) {
-        let shopQuery = queries[2] + this.#createPaging(limit, page);
-        let res = [];
+        const qOpt = {
+            ...(this.#createPaging(limit, page))
+        };
 
         try {
-            const conn = await createConnection(this.#connConfig);
-            res = (await conn.query(shopQuery)).slice(0);
-            await conn.end();
+            return await this._models.shops.findAll(qOpt);
         } catch (err) {
-            err.text = ERROR_MSG_START + "getShops: " + err.text;
             throw err;
         }
-
-        return res;
     }
 
     /**
@@ -89,15 +163,14 @@ export default class RemoteDB extends DataInterface {
      * @returns array JSON list of products and their prices in shops
      */
     async getTags(limit, page) {
-        let tagQuery = queries[3] + this.#createPaging(limit, page);
         let res = [];
 
         try {
             const conn = await createConnection(this.#connConfig);
+            const tagQuery = queries[3] + this.#createPaging(limit, page);
             res = (await conn.query(tagQuery)).slice(0);
             await conn.end();
         } catch (err) {
-            err.text = ERROR_MSG_START + "getTags: " + err.text;
             throw err;
         }
 
@@ -118,11 +191,10 @@ export default class RemoteDB extends DataInterface {
             const queryProduct = queries[4];
             res = (await conn.query(queryProduct, id))[0];
 
-            res.shops = await conn.query(queries[1].replaceAll('{0}', id));
+            res.shops = await conn.query(queries[1], id);
 
             await conn.end();
         } catch (err) {
-            err.text = ERROR_MSG_START + "getProducts: " + err.text;
             throw err;
         }
 
@@ -145,7 +217,6 @@ export default class RemoteDB extends DataInterface {
 
             await conn.end();
         } catch (err) {
-            err.text = ERROR_MSG_START + "getShop: " + err.text;
             throw err;
         }
 
@@ -158,7 +229,7 @@ export default class RemoteDB extends DataInterface {
      * @param {Number} id sid (shop ID)
      * @returns Object JSON formatted shop
      */
-    async getShop(id) {
+    async getTag(id) {
         let res = null;
 
         try {
@@ -168,7 +239,6 @@ export default class RemoteDB extends DataInterface {
 
             await conn.end();
         } catch (err) {
-            err.text = ERROR_MSG_START + "getTag: " + err.text;
             throw err;
         }
 
@@ -176,30 +246,9 @@ export default class RemoteDB extends DataInterface {
     }
 
     #createPaging(limit, page) {
-        if (limit > 0 && page > 0) {
-            let limitFrom = limit * page;
-            return ` LIMIT ${limit} OFFSET ${limitFrom};`;
-        }
-
-        return '';
+        return limit && {
+            limit: limit,
+            ...(page && { offset: limit * page})
+        };
     }
 }
-
-// async function asyncRead() {
-//     let conn;
-//     try {
-//         conn = await pool.getConnection();
-//         const rows = await conn.query("select * from hello_world");
-//         rows.forEach(row => {
-//             console.log(row);
-//         });
-//         await conn.end();
-//         process.exit(0);
-//     } catch (err) {
-//         throw err;
-//     } finally {
-//         if (conn) return conn.end();
-//     }
-// }
-
-// asyncRead().catch(console.error);
